@@ -111,23 +111,23 @@ const Application: React.SFC<{}> = () => {
         <Grid item className="full-width">
           <ChipInput
             newChipKeys={['Enter', ',', ';', ' ']}
-            onChange={(chips) => setBCC(chips)}
-            className="field"
-            id="bcc"
-            label="BCC"
-            variant="outlined"
-            placeholder="secondary-recipient@example.com"
-          ></ChipInput>
-        </Grid>
-        <Grid item className="full-width">
-          <ChipInput
-            newChipKeys={['Enter', ',', ';', ' ']}
             onChange={(chips) => setCC(chips)}
             className="field"
             id="cc"
             label="CC"
             variant="outlined"
-            placeholder="secondary-recipient@example.com"
+            placeholder="cc-recipient@example.com"
+          ></ChipInput>
+        </Grid>
+        <Grid item className="full-width">
+          <ChipInput
+            newChipKeys={['Enter', ',', ';', ' ']}
+            onChange={(chips) => setBCC(chips)}
+            className="field"
+            id="bcc"
+            label="BCC"
+            variant="outlined"
+            placeholder="bcc-recipient@example.com"
           ></ChipInput>
         </Grid>
         <Grid item className="full-width">
