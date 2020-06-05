@@ -24,7 +24,7 @@ body {
 
 .field.field {
   width: 100%;
-  margin: 5px;
+  margin: 10px;
 }
 
 .card {
@@ -73,7 +73,10 @@ code {
   max-width: 700px;
 }
 
-h2 {
+h3 {
   text-align: center;
   margin-bottom: 10px !important;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
 }

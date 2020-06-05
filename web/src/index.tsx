@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import FileCopy from '@material-ui/icons/FileCopyOutlined';
@@ -14,6 +14,7 @@ import {
   ExpansionPanelDetails,
 } from '@material-ui/core';
 import ChipInput from 'material-ui-chip-input';
+import { useStickyState } from './helpers';
 
 // Imported for firebase setup side-effects
 import './firebase';
@@ -66,16 +67,32 @@ const buildLink: (parts: LinkParts) => string = ({
   )}&cc=${encodeURIComponent(cc.join('; '))}`;
 
 const Application: React.SFC<{}> = () => {
-  const [recipient, setRecipient] = useState('');
-  const [subject, setSubject] = useState('');
-  const [body, setBody] = useState('');
-  const [bcc, setBCC] = useState([] as string[]);
-  const [cc, setCC] = useState([] as string[]);
+  const [recipient, setRecipient] = useStickyState('', 'recipient');
+  const [subject, setSubject] = useStickyState('', 'subject');
+  const [body, setBody] = useStickyState('', 'body');
+  const [bcc, setBCC] = useStickyState([] as string[], 'bcc');
+  const [cc, setCC] = useStickyState([] as string[], 'cc');
   const link = buildLink({ recipient, subject, body, bcc, cc });
+  const clearForm = () => {
+    setRecipient('');
+    setSubject('');
+    setBody('');
+    setBCC([]);
+    setCC([]);
+  };
   return (
     <div className="main">
       <Card className="card">
-        <Typography variant="h2">Digital Megaphone</Typography>
+        <Typography variant="h3">
+          <div> Digital Megaphone</div>
+          <Button
+            color="secondary"
+            variant="outlined"
+            onClick={() => clearForm()}
+          >
+            Clear Form
+          </Button>
+        </Typography>
         <ExpansionPanel>
           <ExpansionPanelSummary color="primary" expandIcon={<ExpandMore />}>
             <Typography> What's this for? </Typography>

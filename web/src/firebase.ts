@@ -3,6 +3,7 @@ import firebase from '@firebase/app'
 // Imported for side effects
 // import '@firebase/firestore'
 // import '@firebase/auth'
+import '@firebase/analytics'
 
 const fbApp = firebase.initializeApp({
   apiKey: "AIzaSyAO4Yiah0bHPTaR4Iy8AgYB3tNTqXnKJ8A",
@@ -14,3 +15,5 @@ const fbApp = firebase.initializeApp({
   appId: "1:575640775047:web:208a9ebc29ebb3d511cb22",
   measurementId: "G-QFY4P092Y0"
 });
+
+fbApp.analytics()
