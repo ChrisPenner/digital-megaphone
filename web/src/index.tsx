@@ -4,7 +4,6 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import FileCopy from '@material-ui/icons/FileCopyOutlined';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import TextField from '@material-ui/core/TextField';
-import Container from '@material-ui/core/Container';
 import {
   Grid,
   Button,
@@ -15,6 +14,9 @@ import {
   ExpansionPanelDetails,
 } from '@material-ui/core';
 import ChipInput from 'material-ui-chip-input';
+
+// Imported for firebase setup side-effects
+import './firebase';
 
 const SimpleInput: React.SFC<{
   name: string;
@@ -71,7 +73,7 @@ const Application: React.SFC<{}> = () => {
   const [cc, setCC] = useState([] as string[]);
   const link = buildLink({ recipient, subject, body, bcc, cc });
   return (
-    <div class="main">
+    <div className="main">
       <Card className="card">
         <Typography variant="h2">Digital Megaphone</Typography>
         <ExpansionPanel>
