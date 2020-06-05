@@ -46,6 +46,7 @@ interface LinkParts {
   recipient: string;
   subject: string;
   body: string;
+  cc?: string[];
   bcc?: string[];
 }
 
@@ -54,19 +55,21 @@ const buildLink: (parts: LinkParts) => string = ({
   body,
   subject,
   bcc = [],
+  cc = [],
 }) =>
   `mailto:${encodeURIComponent(recipient || '')}?subject=${encodeURIComponent(
     subject || ''
   )}&body=${encodeURIComponent(body || '')}&bcc=${encodeURIComponent(
     bcc.join('; ')
-  )}`;
+  )}&cc=${encodeURIComponent(cc.join('; '))}`;
 
 const Application: React.SFC<{}> = () => {
   const [recipient, setRecipient] = useState('');
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
   const [bcc, setBCC] = useState([] as string[]);
-  const link = buildLink({ recipient, subject, body, bcc });
+  const [cc, setCC] = useState([] as string[]);
+  const link = buildLink({ recipient, subject, body, bcc, cc });
   return (
     <Card className="card">
       <Grid
@@ -112,6 +115,17 @@ const Application: React.SFC<{}> = () => {
             className="field"
             id="bcc"
             label="BCC"
+            variant="outlined"
+            placeholder="secondary-recipient@example.com"
+          ></ChipInput>
+        </Grid>
+        <Grid item className="full-width">
+          <ChipInput
+            newChipKeys={['Enter', ',', ';', ' ']}
+            onChange={(chips) => setCC(chips)}
+            className="field"
+            id="cc"
+            label="CC"
             variant="outlined"
             placeholder="secondary-recipient@example.com"
           ></ChipInput>
