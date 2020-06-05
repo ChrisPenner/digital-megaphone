@@ -74,6 +74,10 @@ const Application: React.SFC<{}> = () => {
   const [cc, setCC] = useStickyState([] as string[], 'cc');
   const link = buildLink({ recipient, subject, body, bcc, cc });
   const clearForm = () => {
+    const confirmed = window.confirm('Reset the form?');
+    if (!confirmed) {
+      return;
+    }
     setRecipient('');
     setSubject('');
     setBody('');
@@ -168,7 +172,7 @@ const Application: React.SFC<{}> = () => {
                 color="secondary"
               >
                 <Grid container alignItems="center" spacing={2}>
-                  <Grid item>Copy to Clipboard</Grid>
+                  <Grid item>Copy Link</Grid>
                   <Grid item>
                     <FileCopy />
                   </Grid>

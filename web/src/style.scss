@@ -23,8 +23,9 @@ body {
 }
 
 .field.field {
-  width: 100%;
+  // width: 100%;
   margin: 10px;
+  box-sizing: border-box;
 }
 
 .card {
@@ -77,6 +78,6 @@ h3 {
   text-align: center;
   margin-bottom: 10px !important;
   display: flex;
-  flex-flow: row;
+  flex-flow: row wrap;
   justify-content: space-around;
 }
