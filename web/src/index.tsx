@@ -15,9 +15,9 @@ import {
 } from '@material-ui/core';
 import ChipInput from 'material-ui-chip-input';
 import { useStickyState } from './helpers';
+import { Link } from './types';
 
-// Imported for firebase setup side-effects
-import './firebase';
+import { app, db, links } from './firebase';
 
 const SimpleInput: React.SFC<{
   name: string;
@@ -189,4 +189,16 @@ const Application: React.SFC<{}> = () => {
   );
 };
 
-render(<Application />, document.getElementById('root'));
+if (window.location.pathname.startsWith('/l/')) {
+  const linkID = window.location.pathname.slice(3);
+  console.log(linkID);
+  links
+    .doc(linkID)
+    .get()
+    .then((snapshot) => {
+      const link: Link = snapshot.data() as Link;
+      window.location.replace(link.mailTo);
+    });
+} else {
+  render(<Application />, document.getElementById('root'));
+}
