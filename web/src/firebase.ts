@@ -31,19 +31,18 @@ const actionCodeSettings = {
   handleCodeInApp: true,
 };
 
-export function emailLinkSignIn(email: string) {
-  firebase
-    .auth()
-    .sendSignInLinkToEmail('their-email@example.com', actionCodeSettings)
-    .then(function () {
-      // The link was successfully sent. Inform the user.
-      // Save the email locally so you don't need to ask the user for it again
-      // if they open the link on the same device.
-      window.localStorage.setItem('emailForSignIn', email);
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
+export async function emailLinkSignIn(email: string): Promise<boolean> {
+  try {
+    await firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
+  } catch (e) {
+    console.error(e)
+    return false;
+  }
+  // The link was successfully sent. Inform the user.
+  // Save the email locally so you don't need to ask the user for it again
+  // if they open the link on the same device.
+  window.localStorage.setItem('emailForSignIn', email);
+  return true
 }
 
 export function completeEmailLinkSignIn() {
@@ -55,6 +54,7 @@ export function completeEmailLinkSignIn() {
     // Get the email if available. This should be available if the user completes
     // the flow on the same device where they started it.
     var email = window.localStorage.getItem('emailForSignIn');
+    console.log('logging in to', email);
     if (!email) {
       // User opened the link on a different device. To prevent session fixation
       // attacks, ask the user to provide the associated email again. For example:
@@ -64,7 +64,7 @@ export function completeEmailLinkSignIn() {
     firebase
       .auth()
       .signInWithEmailLink(email, window.location.href)
-      .then(function () {
+      .then(function (result) {
         // Clear email from storage.
         window.localStorage.removeItem('emailForSignIn');
         // You can access the new user via result.user
@@ -72,6 +72,8 @@ export function completeEmailLinkSignIn() {
         // result.additionalUserInfo.profile == null
         // You can check if the user is new or existing:
         // result.additionalUserInfo.isNewUser
+        console.log('logged in!')
+        console.log(result.additionalUserInfo);
       })
       .catch(function (error) {
         // Some error occurred, you can inspect the code: error.code
